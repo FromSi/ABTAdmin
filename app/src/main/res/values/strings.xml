@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ABTAdmin</string>
+
+    <string name="tournament_one">Рейтинг</string>
+    <string name="tournament_two">Турнир</string>
+    <string name="tournament_three">28.03.1998</string>
+
+    <string name="dialog_tournament_positive">Добавить</string>
+    <string name="dialog_tournament_neutral">Отмена</string>
+</resources>
