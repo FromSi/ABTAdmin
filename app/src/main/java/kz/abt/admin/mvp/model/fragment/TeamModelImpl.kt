@@ -17,7 +17,38 @@
 package kz.abt.admin.mvp.model.fragment
 
 import kz.abt.admin.mvp.model.fragment.interfaces.TeamModel
+import kz.abt.admin.room.common.DataBaseRequest
+import kz.abt.admin.room.table.Players
+import kz.abt.admin.room.table.Team
+import kz.abt.admin.ui.util.TeamJSON
 
-class TeamModelImpl : TeamModel {
+class TeamModelImpl(private val readListener: OnReadListener) : TeamModel {
+    private var idTournament = 1
 
+    interface OnReadListener {
+
+        fun updateContent(list: MutableList<Team>)
+
+        fun openInfo(team: Team, players: Players)
+    }
+
+    override fun setReadListener() {
+
+        DataBaseRequest.getTeamList(idTournament)
+                .subscribe {
+                    readListener.updateContent(it)
+                }
+    }
+
+    override fun openInfo(team: Team) {
+
+        DataBaseRequest.getPlayers(team.idTeam)
+                .subscribe {
+                    readListener.openInfo(team, it)
+                }
+    }
+
+    override fun setTournament(idTournament: Int) {
+        this.idTournament = idTournament
+    }
 }

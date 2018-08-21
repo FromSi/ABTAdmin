@@ -17,10 +17,9 @@
 package kz.abt.admin.room.interfaces
 
 import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import io.reactivex.Maybe
+import io.reactivex.Flowable
 import kz.abt.admin.room.table.Game
 
 @Dao
@@ -29,9 +28,6 @@ interface GameDao {
     @Insert
     fun insert(game: Game)
 
-    @Delete
-    fun delete(game: Game)
-
     @Query("SELECT * FROM `game` WHERE `game`.idTournament = :idTournament")
-    fun getGameList(idTournament: Int): Maybe<MutableList<Game>>
+    fun getGameList(idTournament: Int): Flowable<MutableList<Game>>
 }

@@ -17,59 +17,60 @@
 package kz.abt.admin.room.common
 
 import io.reactivex.Completable
-import io.reactivex.CompletableObserver
+import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kz.abt.admin.application.App
 import kz.abt.admin.room.table.*
+import kz.abt.admin.ui.util.TeamJSON
 
 object DataBaseRequest {
     private val dataBase = App.getInstance()?.getDataBase()
 
-    interface DataBaseListener<in T> {
-
-        fun insert(item: T)
-    }
-
-    fun insertComplete(complete: Complete, dataBaseListener: DataBaseListener<Complete>) {
+    fun insertComplete(complete: Complete) {
 
         Completable.fromAction { dataBase!!.completeDao().insert(complete) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(insertCompletable(complete, dataBaseListener))
+                .subscribe()
     }
 
-    fun insertGame(game: Game, dataBaseListener: DataBaseListener<Game>) {
+    fun insertGame(game: Game) {
 
         Completable.fromAction { dataBase!!.gameDao().insert(game) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(insertCompletable(game, dataBaseListener))
+                .subscribe()
     }
 
-    fun insertPlayers(players: Players, dataBaseListener: DataBaseListener<Players>) {
+    fun insertTeam(idTournament: Int, teamJSON: TeamJSON) {
 
-        Completable.fromAction { dataBase!!.playersDao().insert(players) }
+        Completable
+                .fromAction {
+                    dataBase!!.playersDao().insert(
+                            Players(
+                                    dataBase.teamDao()
+                                            .insert(Team(idTournament, teamJSON.title, 0)),
+                                    teamJSON.p1,
+                                    teamJSON.p2,
+                                    teamJSON.p3,
+                                    teamJSON.p4,
+                                    teamJSON.p5
+                            )
+                    )
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(insertCompletable(players, dataBaseListener))
+                .subscribe()
     }
 
-    fun insertTeam(team: Team, dataBaseListener: DataBaseListener<Team>) {
-
-        Completable.fromAction { dataBase!!.teamDao().insert(team) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(insertCompletable(team, dataBaseListener))
-    }
-
-    fun insertTournament(tournament: Tournament, dataBaseListener: DataBaseListener<Tournament>) {
+    fun insertTournament(tournament: List<Tournament>) {
 
         Completable.fromAction { dataBase!!.tournamentDao().insert(tournament) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(insertCompletable(tournament, dataBaseListener))
+                .subscribe()
     }
 
     fun getCompleteList(idTournament: Int) = dataBase!!.completeDao()
@@ -82,35 +83,19 @@ object DataBaseRequest {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    fun getPlayers(idTeam: Int) = dataBase!!.playersDao()
+    fun getPlayers(idTeam: Int): Maybe<Players> = dataBase!!.playersDao()
             .getPlayers(idTeam)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    fun getTeamList(idTournament: Int) = dataBase!!.teamDao()
+    fun getTeamList(idTournament: Int): Flowable<MutableList<Team>> = dataBase!!.teamDao()
             .getTeamList(idTournament)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    fun getTournamentList() = dataBase!!.tournamentDao()
+    fun getTournamentList(): Flowable<MutableList<Tournament>> = dataBase!!.tournamentDao()
             .getTournamentList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    private fun <T> insertCompletable(
-            item: T,
-            dataBaseListener: DataBaseListener<T>
-    ): CompletableObserver = object : CompletableObserver {
-        override fun onComplete() {
-            dataBaseListener.insert(item)
-        }
-
-        override fun onSubscribe(d: Disposable) {
-
-        }
-
-        override fun onError(e: Throwable) {
-
-        }
-    }
 }

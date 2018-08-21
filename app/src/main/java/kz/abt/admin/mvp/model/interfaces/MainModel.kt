@@ -16,6 +16,18 @@
 
 package kz.abt.admin.mvp.model.interfaces
 
+import kz.abt.admin.mvp.model.MainModelImpl
+import kz.abt.admin.ui.util.TeamJSON
+
 interface MainModel {
 
+    fun getState(): MainModelImpl.State
+
+    fun setState(state: MainModelImpl.State)
+
+    fun setTournament(idTournament: Int)
+
+    fun getTournament(): Int
+
+    fun insertTeam(teamJSON: TeamJSON)
 }

@@ -17,7 +17,31 @@
 package kz.abt.admin.mvp.model
 
 import kz.abt.admin.mvp.model.interfaces.MainModel
+import kz.abt.admin.room.common.DataBaseRequest
+import kz.abt.admin.ui.util.TeamJSON
 
 class MainModelImpl : MainModel {
+    private var idTournament = 1
+    private var state = State.GAME
 
+    enum class State {
+        GAME, TEAM, COMPLETE
+    }
+
+    override fun setState(state: State) {
+        this.state = state
+    }
+
+    override fun insertTeam(teamJSON: TeamJSON) {
+
+        DataBaseRequest.insertTeam(idTournament, teamJSON)
+    }
+
+    override fun getState(): State = state
+
+    override fun getTournament(): Int = idTournament
+
+    override fun setTournament(idTournament: Int) {
+        this.idTournament = idTournament
+    }
 }

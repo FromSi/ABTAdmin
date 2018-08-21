@@ -17,7 +17,13 @@
 package kz.abt.admin.mvp.view
 
 import com.arellomobile.mvp.MvpView
+import kz.abt.admin.mvp.model.MainModelImpl
 
 interface MainView : MvpView {
 
+    fun setFragment(state: MainModelImpl.State, idTournament: Int)
+
+    fun initClickMenu()
+
+    fun openDialog(state: MainModelImpl.State)
 }

@@ -17,7 +17,26 @@
 package kz.abt.admin.mvp.model
 
 import kz.abt.admin.mvp.model.interfaces.TournamentModel
+import kz.abt.admin.room.common.DataBaseRequest
+import kz.abt.admin.room.table.Tournament
 
 class TournamentModelImpl : TournamentModel {
 
+    interface OnReadListener {
+
+        fun updateContent(list: MutableList<Tournament>)
+    }
+
+    override fun setReadListener(readListener: OnReadListener) {
+
+        DataBaseRequest.getTournamentList()
+                .subscribe {
+                    readListener.updateContent(it)
+                }
+    }
+
+    override fun insertTournament(list: List<Tournament>) {
+
+        DataBaseRequest.insertTournament(list)
+    }
 }

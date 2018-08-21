@@ -21,9 +21,31 @@ import com.arellomobile.mvp.MvpPresenter
 import kz.abt.admin.mvp.model.fragment.TeamModelImpl
 import kz.abt.admin.mvp.model.fragment.interfaces.TeamModel
 import kz.abt.admin.mvp.view.fragment.TeamView
+import kz.abt.admin.room.table.Players
+import kz.abt.admin.room.table.Team
 
 @InjectViewState
-class TeamPresenter : MvpPresenter<TeamView>() {
-    private val model: TeamModel = TeamModelImpl()
+class TeamPresenter : MvpPresenter<TeamView>(), TeamModelImpl.OnReadListener {
+    private val model: TeamModel = TeamModelImpl(this)
 
+    override fun updateContent(list: MutableList<Team>) {
+
+        viewState.setList(list)
+    }
+
+    override fun openInfo(team: Team, players: Players) {
+
+        viewState.openInfo(team, players)
+    }
+
+    fun initPresenter(idTournament: Int) {
+
+        model.setTournament(idTournament)
+        model.setReadListener()
+    }
+
+    fun openInfo(team: Team) {
+
+        model.openInfo(team)
+    }
 }

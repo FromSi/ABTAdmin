@@ -16,7 +16,9 @@
 
 package kz.abt.admin.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -25,25 +27,56 @@ import kz.abt.admin.R
 import kz.abt.admin.mvp.presenter.TournamentPresenter
 import kz.abt.admin.mvp.view.TournamentView
 import kz.abt.admin.room.table.Tournament
+import kz.abt.admin.ui.adapters.TournamentAdapter
 import kz.abt.admin.ui.fragment.dialog.TournamentDialog
 
 class TournamentActivity : MvpAppCompatActivity(), TournamentView {
     @InjectPresenter
     lateinit var presenter: TournamentPresenter
+    private lateinit var adapter: TournamentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_tournament)
         fab.setOnClickListener(initClickFab())
+        initList()
+
+        presenter.initPresenter()
+    }
+
+    override fun setList(list: MutableList<Tournament>) {
+
+        adapter.setList(list)
+    }
+
+    private fun initList() {
+
+        LinearLayoutManager(this).apply {
+            orientation = LinearLayoutManager.VERTICAL
+            list.layoutManager = this
+        }
+
+        adapter = TournamentAdapter().apply {
+            list.adapter = this
+
+            setClickListener(object : TournamentAdapter.OnClickListener {
+                override fun clickListener(idTournament: Int) {
+                    startActivity(Intent(baseContext, MainActivity::class.java).apply {
+                        putExtra("idTournament", idTournament)
+                    })
+                }
+            })
+        }
     }
 
     private fun initClickFab(): View.OnClickListener = View.OnClickListener {
         TournamentDialog().apply {
 
             clickListener(object : TournamentDialog.OnClickListener {
-                override fun onClick(list: MutableList<Tournament>) {
+                override fun onClick(list: List<Tournament>) {
 
+                    presenter.insertTournament(list)
                 }
             })
             show(supportFragmentManager, "tournament_dialog")

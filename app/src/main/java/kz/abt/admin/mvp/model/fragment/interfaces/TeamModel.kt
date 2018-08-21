@@ -16,6 +16,13 @@
 
 package kz.abt.admin.mvp.model.fragment.interfaces
 
+import kz.abt.admin.room.table.Team
+
 interface TeamModel {
 
+    fun setReadListener()
+
+    fun openInfo(team: Team)
+
+    fun setTournament(idTournament: Int)
 }

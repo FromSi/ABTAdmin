@@ -21,9 +21,24 @@ import com.arellomobile.mvp.MvpPresenter
 import kz.abt.admin.mvp.model.TournamentModelImpl
 import kz.abt.admin.mvp.model.interfaces.TournamentModel
 import kz.abt.admin.mvp.view.TournamentView
+import kz.abt.admin.room.table.Tournament
 
 @InjectViewState
-class TournamentPresenter : MvpPresenter<TournamentView>() {
+class TournamentPresenter : MvpPresenter<TournamentView>(), TournamentModelImpl.OnReadListener {
     private val model: TournamentModel = TournamentModelImpl()
 
+    override fun updateContent(list: MutableList<Tournament>) {
+
+        viewState.setList(list)
+    }
+
+    fun initPresenter() {
+
+        model.setReadListener(this)
+    }
+
+    fun insertTournament(list: List<Tournament>) {
+
+        model.insertTournament(list)
+    }
 }

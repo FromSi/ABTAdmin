@@ -16,6 +16,12 @@
 
 package kz.abt.admin.mvp.model.interfaces
 
+import kz.abt.admin.mvp.model.TournamentModelImpl
+import kz.abt.admin.room.table.Tournament
+
 interface TournamentModel {
 
+    fun setReadListener(readListener: TournamentModelImpl.OnReadListener)
+
+    fun insertTournament(list: List<Tournament>)
 }

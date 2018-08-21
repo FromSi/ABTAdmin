@@ -14,20 +14,13 @@
  * limitations under the License.
  */
 
-package kz.abt.admin.room.interfaces
+package kz.abt.admin.ui.util
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
-import io.reactivex.Flowable
-import kz.abt.admin.room.table.Team
-
-@Dao
-interface TeamDao {
-
-    @Insert
-    fun insert(team: Team): Long
-
-    @Query("SELECT * FROM `team` WHERE `team`.idTournament = :idTournament")
-    fun getTeamList(idTournament: Int): Flowable<MutableList<Team>>
-}
+data class TeamJSON(
+        var title: String,
+        var p1: String,
+        var p2: String,
+        var p3: String,
+        var p4: String,
+        var p5: String
+)

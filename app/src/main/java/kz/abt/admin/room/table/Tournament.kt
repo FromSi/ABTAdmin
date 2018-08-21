@@ -23,7 +23,7 @@ import android.arch.persistence.room.PrimaryKey
 data class Tournament(
         var number: Int,
         var typeTournament: Boolean,
-        var time: String
+        var date: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var idTournament: Int = 0

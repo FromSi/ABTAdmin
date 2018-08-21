@@ -1,10 +1,29 @@
 <resources>
     <string name="app_name">ABTAdmin</string>
 
-    <string name="tournament_one">Рейтинг</string>
-    <string name="tournament_two">Турнир</string>
+    <string name="game">Игры</string>
+    <string name="team">Команды</string>
+    <string name="players">Игроки</string>
+    <string name="complete">Завершенные</string>
+    <string name="vs">VS</string>
+
+    <string name="title_team">Название команды</string>
+    <string name="p1">Капитан</string>
+    <string name="p2">Игрок 2</string>
+    <string name="p3">Игрок 3</string>
+    <string name="p4">Игрок 4</string>
+    <string name="p5">Игрок 5</string>
+
+    <string name="tournament_one">Турнир</string>
+    <string name="tournament_two">Рейтинг</string>
     <string name="tournament_three">28.03.1998</string>
 
     <string name="dialog_tournament_positive">Добавить</string>
     <string name="dialog_tournament_neutral">Отмена</string>
+
+    <string name="dialog_team_title">Регистрация команды</string>
+    <string name="dialog_team_positive">Добавить</string>
+    <string name="dialog_team_neutral">Отмена</string>
+
+    <string name="dialog_team_info_positive">Закрыть</string>
 </resources>

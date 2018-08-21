@@ -34,7 +34,7 @@ class TournamentDialog : DialogFragment() {
 
     interface OnClickListener {
 
-        fun onClick(list: MutableList<Tournament>)
+        fun onClick(list: List<Tournament>)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -49,7 +49,7 @@ class TournamentDialog : DialogFragment() {
             setPositiveButton(positive) { _, _ ->
                 val list: MutableList<Tournament> = mutableListOf()
 
-                for (i in 0 until customLayout.date.childCount)
+                for (i in (customLayout.date.childCount - 1) downTo 0)
                     list.add(Tournament(
                             customLayout.number.value,
                             i == 0,

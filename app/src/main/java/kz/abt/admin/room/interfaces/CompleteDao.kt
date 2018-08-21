@@ -19,7 +19,7 @@ package kz.abt.admin.room.interfaces
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import io.reactivex.Maybe
+import io.reactivex.Flowable
 import kz.abt.admin.room.table.Complete
 
 @Dao
@@ -29,5 +29,5 @@ interface CompleteDao {
     fun insert(complete: Complete)
 
     @Query("SELECT * FROM `complete` WHERE `complete`.idTournament = :idTournament")
-    fun getCompleteList(idTournament: Int): Maybe<MutableList<Complete>>
+    fun getCompleteList(idTournament: Int): Flowable<MutableList<Complete>>
 }

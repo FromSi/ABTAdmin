@@ -21,12 +21,10 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity
 data class Players(
+        @PrimaryKey var idTeam: Long,
         var p1: String,
         var p2: String,
         var p3: String,
         var p4: String,
         var p5: String
-) {
-    @PrimaryKey(autoGenerate = true)
-    var idTeam: Int = 0
-}
+)

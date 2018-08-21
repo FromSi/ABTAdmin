@@ -19,15 +19,15 @@ package kz.abt.admin.room.interfaces
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import io.reactivex.Maybe
+import io.reactivex.Flowable
 import kz.abt.admin.room.table.Tournament
 
 @Dao
 interface TournamentDao {
 
     @Insert
-    fun insert(tournament: Tournament)
+    fun insert(tournament: List<Tournament>)
 
-    @Query("SELECT * FROM `tournament`")
-    fun getTournamentList(): Maybe<MutableList<Tournament>>
+    @Query("SELECT * FROM `tournament` ORDER BY `idTournament` DESC")
+    fun getTournamentList(): Flowable<MutableList<Tournament>>
 }

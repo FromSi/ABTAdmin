@@ -21,9 +21,36 @@ import com.arellomobile.mvp.MvpPresenter
 import kz.abt.admin.mvp.model.MainModelImpl
 import kz.abt.admin.mvp.model.interfaces.MainModel
 import kz.abt.admin.mvp.view.MainView
+import kz.abt.admin.ui.util.TeamJSON
 
 @InjectViewState
 class MainPresenter : MvpPresenter<MainView>() {
     private val model: MainModel = MainModelImpl()
 
+    fun initPresenter(idTournament: Int) {
+
+        model.setTournament(idTournament)
+        viewState.initClickMenu()
+    }
+
+    fun openDialog() {
+
+        viewState.openDialog(model.getState())
+    }
+
+    fun setState(state: MainModelImpl.State) {
+
+        model.setState(state)
+    }
+
+    fun setFragment(state: MainModelImpl.State) {
+
+        if (state != model.getState())
+            viewState.setFragment(state, model.getTournament())
+    }
+
+    fun insertTeam(teamJSON: TeamJSON) {
+
+        model.insertTeam(teamJSON)
+    }
 }

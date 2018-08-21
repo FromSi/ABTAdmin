@@ -29,5 +29,5 @@ interface PlayersDao {
     fun insert(players: Players)
 
     @Query("SELECT * FROM `players` WHERE `players`.idTeam = :idTeam")
-    fun getPlayers(idTeam: Int): Maybe<MutableList<Players>>
+    fun getPlayers(idTeam: Int): Maybe<Players>
 }

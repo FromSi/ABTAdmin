@@ -17,7 +17,9 @@
 package kz.abt.admin.mvp.view
 
 import com.arellomobile.mvp.MvpView
+import kz.abt.admin.room.table.Tournament
 
 interface TournamentView : MvpView {
 
+    fun setList(list: MutableList<Tournament>)
 }

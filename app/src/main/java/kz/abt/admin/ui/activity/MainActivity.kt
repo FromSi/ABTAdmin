@@ -17,11 +17,19 @@
 package kz.abt.admin.ui.activity
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
+import kotlinx.android.synthetic.main.activity_main.*
 import kz.abt.admin.R
+import kz.abt.admin.mvp.model.MainModelImpl
 import kz.abt.admin.mvp.presenter.MainPresenter
 import kz.abt.admin.mvp.view.MainView
+import kz.abt.admin.ui.fragment.CompleteFragment
+import kz.abt.admin.ui.fragment.GameFragment
+import kz.abt.admin.ui.fragment.TeamFragment
+import kz.abt.admin.ui.fragment.dialog.TeamDialog
+import kz.abt.admin.ui.util.TeamJSON
 import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
 
@@ -40,5 +48,88 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                     swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
                     onPostCreate()
                 }
+        fab.setOnClickListener { presenter.openDialog() }
+        presenter.initPresenter(intent.getIntExtra("idTournament", 1))
+    }
+
+    override fun openDialog(state: MainModelImpl.State) {
+
+        when (state) {
+            MainModelImpl.State.GAME -> {
+
+            }
+            MainModelImpl.State.TEAM -> {
+
+                TeamDialog().apply {
+
+                    clickListener(object : TeamDialog.OnClickListener {
+                        override fun onClick(teamJSON: TeamJSON) {
+
+                            presenter.insertTeam(teamJSON)
+                        }
+                    })
+                    show(supportFragmentManager, "team_dialog")
+                }
+            }
+            MainModelImpl.State.COMPLETE -> {
+
+            }
+        }
+    }
+
+    override fun initClickMenu() {
+        for (i in 0 until menu.childCount)
+            menu.getChildAt(i).setOnClickListener {
+
+                presenter.setFragment(
+                        when (i) {
+                            0 -> MainModelImpl.State.GAME
+                            1 -> MainModelImpl.State.TEAM
+                            2 -> MainModelImpl.State.COMPLETE
+                            else -> MainModelImpl.State.GAME
+                        }
+                )
+            }
+    }
+
+    override fun setFragment(state: MainModelImpl.State, idTournament: Int) {
+
+        supportFragmentManager
+                .beginTransaction()
+                .apply {
+
+                    replace(R.id.fragment, getFragment(state, idTournament))
+                    commit()
+                }
+    }
+
+    private fun getFragment(state: MainModelImpl.State, idTournament: Int): Fragment = when (state) {
+        MainModelImpl.State.GAME -> {
+
+            presenter.setState(MainModelImpl.State.GAME)
+            GameFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("idTournament", idTournament)
+                }
+            }
+        }
+        MainModelImpl.State.TEAM -> {
+
+            presenter.setState(MainModelImpl.State.TEAM)
+            TeamFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("idTournament", idTournament)
+                }
+            }
+        }
+        MainModelImpl.State.COMPLETE -> {
+
+            presenter.setState(MainModelImpl.State.COMPLETE)
+            CompleteFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("idTournament", idTournament)
+                }
+            }
+        }
     }
 }

@@ -17,7 +17,12 @@
 package kz.abt.admin.mvp.view.fragment
 
 import com.arellomobile.mvp.MvpView
+import kz.abt.admin.room.table.Players
+import kz.abt.admin.room.table.Team
 
 interface TeamView : MvpView {
 
+    fun setList(list: MutableList<Team>)
+
+    fun openInfo(team: Team, players: Players)
 }

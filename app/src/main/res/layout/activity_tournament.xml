@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="kz.abt.admin.ui.activity.TournamentActivity">
 
     <android.support.v7.widget.RecyclerView
@@ -16,5 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@drawable/add"
-        android:layout_gravity="bottom|end" />
+        android:layout_gravity="bottom|end"
+        app:hideOnScroll="true"/>
 </android.support.design.widget.CoordinatorLayout>
