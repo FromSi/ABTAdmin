@@ -26,4 +26,6 @@
     <string name="dialog_team_neutral">Отмена</string>
 
     <string name="dialog_team_info_positive">Закрыть</string>
+
+    <string name="bottom_sheet_game_title">Выберите две команды</string>
 </resources>
