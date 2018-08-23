@@ -23,7 +23,16 @@ import kz.abt.admin.mvp.model.interfaces.GameModel
 import kz.abt.admin.mvp.view.GameView
 
 @InjectViewState
-class GamePresenter : MvpPresenter<GameView>() {
-    private val model: GameModel = GameModelImpl()
+class GamePresenter : MvpPresenter<GameView>(), GameModelImpl.OnReadListener {
+    private val model: GameModel = GameModelImpl(this)
 
+    override fun initTeams(titleTeamOne: String, titleTeamTwo: String) {
+
+        viewState.initTeams(titleTeamOne, titleTeamTwo)
+    }
+
+    fun setId(idTournament: Int, idTeamOne: Int, idTeamTwo: Int) {
+
+        model.setId(idTournament, idTeamOne, idTeamTwo)
+    }
 }

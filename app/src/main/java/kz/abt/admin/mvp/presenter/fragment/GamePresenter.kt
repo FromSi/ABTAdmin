@@ -21,9 +21,29 @@ import com.arellomobile.mvp.MvpPresenter
 import kz.abt.admin.mvp.model.fragment.GameModelImpl
 import kz.abt.admin.mvp.model.fragment.interfaces.GameModel
 import kz.abt.admin.mvp.view.fragment.GameView
+import kz.abt.admin.ui.util.GameJSON
 
 @InjectViewState
-class GamePresenter : MvpPresenter<GameView>() {
-    private val model: GameModel = GameModelImpl()
+class GamePresenter : MvpPresenter<GameView>(), GameModelImpl.OnReadListener {
+    private val model: GameModel = GameModelImpl(this)
 
+    override fun onGame(list: MutableList<GameJSON>) {
+
+        viewState.setList(list)
+    }
+
+    fun initPresenter(idTournament: Int) {
+
+        model.setTournament(idTournament)
+        model.setReadListener()
+    }
+
+    fun openGame(idTeamOne: Int, idTeamTwo: Int) {
+
+        viewState.openGame(
+                model.getTournament(),
+                idTeamOne,
+                idTeamTwo
+        )
+    }
 }

@@ -20,6 +20,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import kz.abt.admin.room.table.Team
 
 @Dao
@@ -30,4 +31,10 @@ interface TeamDao {
 
     @Query("SELECT * FROM `team` WHERE `team`.idTournament = :idTournament")
     fun getTeamList(idTournament: Int): Flowable<MutableList<Team>>
+
+    @Query("SELECT * FROM `team` WHERE `team`.idTournament = :idTournament")
+    fun getTeamListMaybe(idTournament: Int): Maybe<MutableList<Team>>
+
+    @Query("SELECT * FROM `team` WHERE `team`.idTeam = :id")
+    fun getTeam(id: Int): Maybe<Team>
 }

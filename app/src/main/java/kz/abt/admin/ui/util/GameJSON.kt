@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package kz.abt.admin.mvp.view
+package kz.abt.admin.ui.util
 
-import com.arellomobile.mvp.MvpView
+import kz.abt.admin.room.table.Team
 
-interface GameView : MvpView {
-
-    fun initTeams(titleTeamOne: String, titleTeamTwo: String)
-}
+data class GameJSON(
+        var teamOne: Team,
+        var teamTwo: Team
+)

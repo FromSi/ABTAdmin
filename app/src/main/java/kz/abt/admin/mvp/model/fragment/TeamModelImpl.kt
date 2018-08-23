@@ -20,7 +20,6 @@ import kz.abt.admin.mvp.model.fragment.interfaces.TeamModel
 import kz.abt.admin.room.common.DataBaseRequest
 import kz.abt.admin.room.table.Players
 import kz.abt.admin.room.table.Team
-import kz.abt.admin.ui.util.TeamJSON
 
 class TeamModelImpl(private val readListener: OnReadListener) : TeamModel {
     private var idTournament = 1

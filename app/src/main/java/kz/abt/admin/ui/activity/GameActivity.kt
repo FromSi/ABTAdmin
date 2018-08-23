@@ -19,11 +19,10 @@ package kz.abt.admin.ui.activity
 import android.os.Bundle
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
+import kotlinx.android.synthetic.main.activity_game.*
 import kz.abt.admin.R
 import kz.abt.admin.mvp.presenter.GamePresenter
 import kz.abt.admin.mvp.view.GameView
-import me.imid.swipebacklayout.lib.SwipeBackLayout
-import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
 
 class GameActivity : MvpAppCompatActivity(), GameView {
     @InjectPresenter
@@ -33,12 +32,16 @@ class GameActivity : MvpAppCompatActivity(), GameView {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_game)
-        SwipeBackActivityHelper(this)
-                .apply {
 
-                    onActivityCreate()
-                    swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
-                    onPostCreate()
-                }
+        presenter.setId(
+                intent.getIntExtra("idTournament", 1),
+                intent.getIntExtra("idTeamOne", 1),
+                intent.getIntExtra("idTeamTwo", 1)
+        )
+    }
+
+    override fun initTeams(titleTeamOne: String, titleTeamTwo: String) {
+        title_1.text = titleTeamOne
+        title_2.text = titleTeamTwo
     }
 }

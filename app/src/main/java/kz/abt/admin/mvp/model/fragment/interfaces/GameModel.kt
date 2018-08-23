@@ -18,4 +18,9 @@ package kz.abt.admin.mvp.model.fragment.interfaces
 
 interface GameModel {
 
+    fun getTournament(): Int
+
+    fun setTournament(idTournament: Int)
+
+    fun setReadListener()
 }

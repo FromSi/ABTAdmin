@@ -16,8 +16,42 @@
 
 package kz.abt.admin.mvp.model
 
+import io.reactivex.Maybe
 import kz.abt.admin.mvp.model.interfaces.GameModel
+import kz.abt.admin.room.common.DataBaseRequest
+import kz.abt.admin.room.table.Team
 
-class GameModelImpl: GameModel {
+class GameModelImpl(private val readListener: OnReadListener) : GameModel {
+    private var idTournament = 0
 
+    private lateinit var teamOne: Team
+    private lateinit var teamTwo: Team
+
+    interface OnReadListener {
+
+        fun initTeams(titleTeamOne: String, titleTeamTwo: String)
+    }
+
+    override fun setId(idTournament: Int, idTeamOne: Int, idTeamTwo: Int) {
+        var index = 0
+        this.idTournament = idTournament
+
+        Maybe
+                .concat(
+                        DataBaseRequest.getTeam(idTeamOne),
+                        DataBaseRequest.getTeam(idTeamTwo)
+                )
+                .subscribe(
+                        {
+                            if (index == 0) {
+                                index++
+
+                                teamOne = it
+                            } else
+                                teamTwo = it
+                        },
+                        { },
+                        { readListener.initTeams(teamOne.title, teamTwo.title) }
+                )
+    }
 }

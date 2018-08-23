@@ -18,6 +18,7 @@ package kz.abt.admin.mvp.view
 
 import com.arellomobile.mvp.MvpView
 import kz.abt.admin.mvp.model.MainModelImpl
+import kz.abt.admin.room.table.Team
 
 interface MainView : MvpView {
 
@@ -25,5 +26,9 @@ interface MainView : MvpView {
 
     fun initClickMenu()
 
-    fun openDialog(state: MainModelImpl.State)
+    fun initFragment(state: MainModelImpl.State, idTournament: Int)
+
+    fun openDialogTeam()
+
+    fun openSheetGame(list: MutableList<Team>)
 }

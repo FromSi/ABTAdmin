@@ -25,10 +25,12 @@ import kz.abt.admin.R
 import kz.abt.admin.mvp.model.MainModelImpl
 import kz.abt.admin.mvp.presenter.MainPresenter
 import kz.abt.admin.mvp.view.MainView
+import kz.abt.admin.room.table.Team
 import kz.abt.admin.ui.fragment.CompleteFragment
 import kz.abt.admin.ui.fragment.GameFragment
 import kz.abt.admin.ui.fragment.TeamFragment
 import kz.abt.admin.ui.fragment.dialog.TeamDialog
+import kz.abt.admin.ui.fragment.sheet.GameBottomSheet
 import kz.abt.admin.ui.util.TeamJSON
 import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
@@ -48,32 +50,36 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                     swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
                     onPostCreate()
                 }
-        fab.setOnClickListener { presenter.openDialog() }
+        fab.setOnClickListener { presenter.clickFab() }
         presenter.initPresenter(intent.getIntExtra("idTournament", 1))
     }
 
-    override fun openDialog(state: MainModelImpl.State) {
+    override fun openDialogTeam() {
 
-        when (state) {
-            MainModelImpl.State.GAME -> {
+        TeamDialog().apply {
 
-            }
-            MainModelImpl.State.TEAM -> {
+            clickListener(object : TeamDialog.OnClickListener {
+                override fun onClick(teamJSON: TeamJSON) {
 
-                TeamDialog().apply {
-
-                    clickListener(object : TeamDialog.OnClickListener {
-                        override fun onClick(teamJSON: TeamJSON) {
-
-                            presenter.insertTeam(teamJSON)
-                        }
-                    })
-                    show(supportFragmentManager, "team_dialog")
+                    presenter.insertTeam(teamJSON)
                 }
-            }
-            MainModelImpl.State.COMPLETE -> {
+            })
+            show(supportFragmentManager, "team_dialog")
+        }
+    }
 
-            }
+    override fun openSheetGame(list: MutableList<Team>) {
+
+        GameBottomSheet().apply {
+
+            setClickListener(object : GameBottomSheet.OnClickListener {
+                override fun getAccept(one: Int, two: Int) {
+
+                    presenter.insertGame(one, two)
+                }
+            })
+            setList(list)
+            show(supportFragmentManager, "bottom_sheet_game")
         }
     }
 
@@ -93,6 +99,17 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun setFragment(state: MainModelImpl.State, idTournament: Int) {
+
+        supportFragmentManager
+                .beginTransaction()
+                .apply {
+
+                    replace(R.id.fragment, getFragment(state, idTournament))
+                    commit()
+                }
+    }
+
+    override fun initFragment(state: MainModelImpl.State, idTournament: Int) {
 
         supportFragmentManager
                 .beginTransaction()

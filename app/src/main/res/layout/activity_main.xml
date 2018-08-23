@@ -18,9 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:fabAlignmentMode="end"
-        app:hideOnScroll="true"
-        app:layout_scrollFlags="scroll|enterAlways">
+        app:fabAlignmentMode="end">
 
         <LinearLayout
             android:id="@+id/menu"

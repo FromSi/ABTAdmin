@@ -18,4 +18,5 @@ package kz.abt.admin.mvp.model.interfaces
 
 interface GameModel {
 
+    fun setId(idTournament: Int, idTeamOne: Int, idTeamTwo: Int)
 }

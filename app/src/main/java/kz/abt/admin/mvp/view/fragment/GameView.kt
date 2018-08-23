@@ -17,7 +17,11 @@
 package kz.abt.admin.mvp.view.fragment
 
 import com.arellomobile.mvp.MvpView
+import kz.abt.admin.ui.util.GameJSON
 
 interface GameView : MvpView {
 
+    fun setList(list: MutableList<GameJSON>)
+
+    fun openGame(idTournament: Int, idTeamOne: Int, idTeamTwo: Int)
 }

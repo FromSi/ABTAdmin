@@ -16,8 +16,49 @@
 
 package kz.abt.admin.mvp.model.fragment
 
+import io.reactivex.Maybe
+import io.reactivex.functions.BiFunction
 import kz.abt.admin.mvp.model.fragment.interfaces.GameModel
+import kz.abt.admin.room.common.DataBaseRequest
+import kz.abt.admin.room.table.Team
+import kz.abt.admin.ui.util.GameJSON
 
-class GameModelImpl : GameModel {
+class GameModelImpl(private val readListener: OnReadListener) : GameModel {
+    private var idTournament = 1
 
+    interface OnReadListener {
+
+        fun onGame(list: MutableList<GameJSON>)
+    }
+
+    override fun setReadListener() {
+
+        DataBaseRequest.getGameList(idTournament)
+                .map { it ->
+                    val list: MutableList<GameJSON> = mutableListOf()
+                    val zipList: MutableList<Maybe<GameJSON>> = mutableListOf()
+
+                    for (i in 0 until it.size)
+                        zipList.add(Maybe
+                                .zip(
+                                        DataBaseRequest.getTeam(it[i].idTeamOne),
+                                        DataBaseRequest.getTeam(it[i].idTeamTwo),
+                                        BiFunction<Team, Team, GameJSON> { one, two -> GameJSON(one, two) }
+                                )
+                        )
+
+                    Maybe.concat(zipList)
+                            .subscribe(
+                                    { list.add(it) },
+                                    { },
+                                    { readListener.onGame(list) }
+                            )
+                }.subscribe()
+    }
+
+    override fun setTournament(idTournament: Int) {
+        this.idTournament = idTournament
+    }
+
+    override fun getTournament(): Int = idTournament
 }

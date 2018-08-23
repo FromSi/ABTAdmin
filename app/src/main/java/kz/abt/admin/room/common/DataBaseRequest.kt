@@ -78,7 +78,7 @@ object DataBaseRequest {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    fun getGameList(idTournament: Int) = dataBase!!.gameDao()
+    fun getGameList(idTournament: Int): Flowable<MutableList<Game>> = dataBase!!.gameDao()
             .getGameList(idTournament)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -90,6 +90,16 @@ object DataBaseRequest {
 
     fun getTeamList(idTournament: Int): Flowable<MutableList<Team>> = dataBase!!.teamDao()
             .getTeamList(idTournament)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+    fun getTeam(id: Int): Maybe<Team> = dataBase!!.teamDao()
+            .getTeam(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+    fun getTeamListMaybe(idTournament: Int): Maybe<MutableList<Team>> = dataBase!!.teamDao()
+            .getTeamListMaybe(idTournament)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 

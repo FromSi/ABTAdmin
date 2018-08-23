@@ -18,14 +18,34 @@ package kz.abt.admin.mvp.model
 
 import kz.abt.admin.mvp.model.interfaces.MainModel
 import kz.abt.admin.room.common.DataBaseRequest
+import kz.abt.admin.room.table.Game
+import kz.abt.admin.room.table.Team
 import kz.abt.admin.ui.util.TeamJSON
 
-class MainModelImpl : MainModel {
+class MainModelImpl(private val readListener: OnReadListener) : MainModel {
     private var idTournament = 1
     private var state = State.GAME
 
     enum class State {
         GAME, TEAM, COMPLETE
+    }
+
+    interface OnReadListener {
+
+        fun onTeam(list: MutableList<Team>)
+    }
+
+    override fun openSheetGame() {
+
+        DataBaseRequest.getTeamListMaybe(idTournament)
+                .subscribe {
+                    readListener.onTeam(it)
+                }
+    }
+
+    override fun insertGame(one: Int, two: Int) {
+
+        DataBaseRequest.insertGame(Game(idTournament, one, two))
     }
 
     override fun setState(state: State) {

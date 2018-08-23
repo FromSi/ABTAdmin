@@ -50,6 +50,7 @@ class TeamFragment : MvpAppCompatFragment(), TeamView {
         initList()
 
         this.arguments.apply {
+
             if (this != null)
                 presenter.initPresenter(getInt("idTournament"))
         }

@@ -1,3 +1,19 @@
+/*
+ * Copyright 2018 Vlad Weber-Pflaumer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kz.abt.admin.ui.fragment.sheet
 
 import android.annotation.SuppressLint
@@ -11,17 +27,23 @@ import android.widget.ImageButton
 import kotlinx.android.synthetic.main.bottom_sheet_game.view.*
 import kz.abt.admin.R
 import kz.abt.admin.room.table.Team
-import kz.abt.admin.ui.adapters.GameAdapter
+import kz.abt.admin.ui.adapters.GameTeamAdapter
 
 class GameBottomSheet : BottomSheetDialogFragment() {
-    private var titleText = resources.getString(R.string.bottom_sheet_game_title)
-
     private lateinit var list: MutableList<Team>
     private lateinit var button: ImageButton
+    private lateinit var clickListener: OnClickListener
+
+    interface OnClickListener {
+
+        fun getAccept(one: Int, two: Int)
+    }
 
     @SuppressLint("RestrictedApi")
     override fun setupDialog(dialog: Dialog?, style: Int) {
         super.setupDialog(dialog, style)
+
+        val textTitle = resources.getString(R.string.bottom_sheet_game_title)
 
         View.inflate(context, R.layout.bottom_sheet_game, null).apply {
 
@@ -35,7 +57,7 @@ class GameBottomSheet : BottomSheetDialogFragment() {
                 activity!!.windowManager.defaultDisplay.getMetrics(diametric)
 
                 bottomSheet.peekHeight = diametric.heightPixels / 2
-                title.text = titleText
+                title.text = textTitle
                 button = exit
 
                 button.setOnClickListener(initClickExit())
@@ -44,6 +66,11 @@ class GameBottomSheet : BottomSheetDialogFragment() {
                 requestLayout()
             }
         }
+    }
+
+    fun setClickListener(clickListener: OnClickListener) {
+
+        this.clickListener = clickListener
     }
 
     fun setList(list: MutableList<Team>) {
@@ -58,9 +85,14 @@ class GameBottomSheet : BottomSheetDialogFragment() {
             orientation = LinearLayoutManager.VERTICAL
             view.list.layoutManager = this
         }
-        GameAdapter().apply {
+        GameTeamAdapter().apply {
             view.list.adapter = this
 
+            view.accept.setOnClickListener {
+
+                clickListener.getAccept(getTeamOne(), getTeamTwo())
+                dismiss()
+            }
             this.setList(list)
         }
     }

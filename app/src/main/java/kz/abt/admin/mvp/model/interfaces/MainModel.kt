@@ -23,11 +23,15 @@ interface MainModel {
 
     fun getState(): MainModelImpl.State
 
+    fun getTournament(): Int
+
     fun setState(state: MainModelImpl.State)
 
     fun setTournament(idTournament: Int)
 
-    fun getTournament(): Int
+    fun openSheetGame()
 
     fun insertTeam(teamJSON: TeamJSON)
+
+    fun insertGame(one: Int, two: Int)
 }
