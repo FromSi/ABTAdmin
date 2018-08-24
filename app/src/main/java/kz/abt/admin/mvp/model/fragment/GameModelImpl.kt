@@ -43,7 +43,7 @@ class GameModelImpl(private val readListener: OnReadListener) : GameModel {
                                 .zip(
                                         DataBaseRequest.getTeam(it[i].idTeamOne),
                                         DataBaseRequest.getTeam(it[i].idTeamTwo),
-                                        BiFunction<Team, Team, GameJSON> { one, two -> GameJSON(one, two) }
+                                        BiFunction<Team, Team, GameJSON> { one, two -> GameJSON(one, two, it[i].idGame) }
                                 )
                         )
 

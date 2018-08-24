@@ -20,5 +20,19 @@ import com.arellomobile.mvp.MvpView
 
 interface GameView : MvpView {
 
+    fun setTime(time: String)
+
+    fun setPointOne(text: String)
+
+    fun setPointTwo(text: String)
+
     fun initTeams(titleTeamOne: String, titleTeamTwo: String)
+
+    fun playTimer()
+
+    fun finishActivity()
+
+    fun viewPoint(team: String, point: Int)
+
+    fun pauseTimer()
 }

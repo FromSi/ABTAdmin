@@ -31,7 +31,7 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.GameHolder>() {
 
     interface OnClickListener {
 
-        fun onClick(idTeamOne: Int, idTeamTwo: Int)
+        fun onClick(idTeamOne: Int, idTeamTwo: Int, idGame: Int)
     }
 
     fun setList(list: MutableList<GameJSON>) {
@@ -59,7 +59,8 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.GameHolder>() {
 
             clickListener.onClick(
                     list[p1].teamOne.idTeam,
-                    list[p1].teamTwo.idTeam
+                    list[p1].teamTwo.idTeam,
+                    list[p1].idGame
             )
         }
     }

@@ -20,11 +20,11 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity
-class Game(
+data class Game(
         var idTournament: Int,
         var idTeamOne: Int,
         var idTeamTwo: Int
 ) {
     @PrimaryKey(autoGenerate = true)
-    var idComplete: Int = 0
+    var idGame: Int = 0
 }

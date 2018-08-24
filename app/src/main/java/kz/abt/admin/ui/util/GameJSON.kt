@@ -20,5 +20,6 @@ import kz.abt.admin.room.table.Team
 
 data class GameJSON(
         var teamOne: Team,
-        var teamTwo: Team
+        var teamTwo: Team,
+        var idGame: Int
 )

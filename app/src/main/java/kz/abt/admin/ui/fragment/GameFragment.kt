@@ -62,7 +62,7 @@ class GameFragment : MvpAppCompatFragment(), GameView {
         adapter.setList(list)
     }
 
-    override fun openGame(idTournament: Int, idTeamOne: Int, idTeamTwo: Int) {
+    override fun openGame(idTournament: Int, idTeamOne: Int, idTeamTwo: Int, idGame: Int) {
 
         Intent(activity!!.baseContext, GameActivity::class.java)
                 .apply {
@@ -70,6 +70,7 @@ class GameFragment : MvpAppCompatFragment(), GameView {
                     putExtra("idTournament", idTournament)
                     putExtra("idTeamOne", idTeamOne)
                     putExtra("idTeamTwo", idTeamTwo)
+                    putExtra("idGame", idGame)
                     startActivity(this)
                 }
     }
@@ -85,9 +86,9 @@ class GameFragment : MvpAppCompatFragment(), GameView {
             list.adapter = this
 
             setOnClickListener(object : GameAdapter.OnClickListener {
-                override fun onClick(idTeamOne: Int, idTeamTwo: Int) {
+                override fun onClick(idTeamOne: Int, idTeamTwo: Int, idGame: Int) {
 
-                    presenter.openGame(idTeamOne, idTeamTwo)
+                    presenter.openGame(idTeamOne, idTeamTwo, idGame)
                 }
             })
         }

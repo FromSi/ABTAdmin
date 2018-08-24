@@ -25,6 +25,11 @@
     <string name="dialog_team_positive">Добавить</string>
     <string name="dialog_team_neutral">Отмена</string>
 
+    <string name="dialog_exit_title">Завершить игру</string>
+    <string name="dialog_exit_message">Олег, какого х..?\nТы точно хочешь это сделать?</string>
+    <string name="dialog_exit_positive">Завершить</string>
+    <string name="dialog_exit_neutral">Отмена</string>
+
     <string name="dialog_team_info_positive">Закрыть</string>
 
     <string name="bottom_sheet_game_title">Выберите две команды</string>

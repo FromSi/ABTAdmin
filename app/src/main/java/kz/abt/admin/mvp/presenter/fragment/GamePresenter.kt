@@ -38,12 +38,13 @@ class GamePresenter : MvpPresenter<GameView>(), GameModelImpl.OnReadListener {
         model.setReadListener()
     }
 
-    fun openGame(idTeamOne: Int, idTeamTwo: Int) {
+    fun openGame(idTeamOne: Int, idTeamTwo: Int, idGame: Int) {
 
         viewState.openGame(
                 model.getTournament(),
                 idTeamOne,
-                idTeamTwo
+                idTeamTwo,
+                idGame
         )
     }
 }

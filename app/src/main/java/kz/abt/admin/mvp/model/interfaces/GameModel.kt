@@ -16,7 +16,19 @@
 
 package kz.abt.admin.mvp.model.interfaces
 
+import android.os.CountDownTimer
+
 interface GameModel {
 
-    fun setId(idTournament: Int, idTeamOne: Int, idTeamTwo: Int)
+    fun getTimer(): CountDownTimer
+
+    fun getStateTimer(): Boolean
+
+    fun setScoreOne(scoreOne: Int): String
+
+    fun setScoreTwo(scoreTwo: Int): String
+
+    fun setId(idTournament: Int, idTeamOne: Int, idTeamTwo: Int, idGame: Int)
+
+    fun finishActivity()
 }

@@ -31,8 +31,47 @@ class GamePresenter : MvpPresenter<GameView>(), GameModelImpl.OnReadListener {
         viewState.initTeams(titleTeamOne, titleTeamTwo)
     }
 
-    fun setId(idTournament: Int, idTeamOne: Int, idTeamTwo: Int) {
+    override fun setTime(time: String) {
 
-        model.setId(idTournament, idTeamOne, idTeamTwo)
+        viewState.setTime(time)
+    }
+
+    fun setId(idTournament: Int, idTeamOne: Int, idTeamTwo: Int, idGame: Int) {
+
+        model.setId(idTournament, idTeamOne, idTeamTwo, idGame)
+    }
+
+    fun setScoreOne(point: Int, pointOne: Int) {
+
+        viewState.viewPoint(model.setScoreOne(point), point)
+
+        if ((pointOne + point) > 9)
+            viewState.setPointOne((pointOne + point).toString())
+        else
+            viewState.setPointOne("0${pointOne + point}")
+    }
+
+    fun setScoreTwo(point: Int, pointTwo: Int) {
+
+        viewState.viewPoint(model.setScoreTwo(point), point)
+
+        if ((pointTwo + point) > 9)
+            viewState.setPointTwo((pointTwo + point).toString())
+        else
+            viewState.setPointTwo("0${pointTwo + point}")
+    }
+
+    override fun finishActivity(){
+
+        model.finishActivity()
+        viewState.finishActivity()
+    }
+
+    fun stateTimer() {
+
+        if (model.getStateTimer())
+            viewState.playTimer()
+        else
+            viewState.pauseTimer()
     }
 }

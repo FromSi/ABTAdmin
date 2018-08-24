@@ -23,5 +23,5 @@ interface GameView : MvpView {
 
     fun setList(list: MutableList<GameJSON>)
 
-    fun openGame(idTournament: Int, idTeamOne: Int, idTeamTwo: Int)
+    fun openGame(idTournament: Int, idTeamOne: Int, idTeamTwo: Int, idGame: Int)
 }
