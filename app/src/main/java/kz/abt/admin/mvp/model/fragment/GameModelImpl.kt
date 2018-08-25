@@ -38,6 +38,7 @@ class GameModelImpl(private val readListener: OnReadListener) : GameModel {
                     val list: MutableList<GameJSON> = mutableListOf()
                     val zipList: MutableList<Maybe<GameJSON>> = mutableListOf()
 
+                    //Собирает list для ассихронного запроса Maybe из Room
                     for (i in 0 until it.size)
                         zipList.add(Maybe
                                 .zip(
@@ -47,6 +48,7 @@ class GameModelImpl(private val readListener: OnReadListener) : GameModel {
                                 )
                         )
 
+                    //Собирает объекты и отправляет готовый list presenter'у
                     Maybe.concat(zipList)
                             .subscribe(
                                     { list.add(it) },

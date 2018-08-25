@@ -95,5 +95,6 @@ class TournamentDialog : DialogFragment() {
         val day: String = if (p3 >= 10) p3.toString() else "0$p3"
         val month: String = if (p2 >= 10) p2.toString() else "0$p2"
         textView.text = "$day.$month.$p1"
+        textView.setTextColor(resources.getColor(R.color.colorAccent))
     }
 }

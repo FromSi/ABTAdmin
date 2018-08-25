@@ -18,4 +18,7 @@ package kz.abt.admin.mvp.model.fragment.interfaces
 
 interface CompleteModel {
 
+    fun setTournament(idTournament: Int)
+
+    fun setReadListener()
 }

@@ -16,19 +16,25 @@
 
 package kz.abt.admin.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
+import kotlinx.android.synthetic.main.fragment_complete.*
 import kz.abt.admin.R
 import kz.abt.admin.mvp.presenter.fragment.CompletePresenter
 import kz.abt.admin.mvp.view.fragment.CompleteView
+import kz.abt.admin.ui.adapters.CompleteAdapter
+import kz.abt.admin.ui.util.CompleteJSON
 
 class CompleteFragment : MvpAppCompatFragment(), CompleteView {
     @InjectPresenter
     lateinit var presenter: CompletePresenter
+    private lateinit var adapter: CompleteAdapter
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -39,5 +45,30 @@ class CompleteFragment : MvpAppCompatFragment(), CompleteView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initList()
+        this.arguments.apply {
+
+            if (this != null)
+                presenter.initPresenter(getInt("idTournament"))
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun setList(list: MutableList<CompleteJSON>) {
+        value.text = "Всего законченных игр: ${list.size}"
+
+        adapter.setList(list)
+    }
+
+    private fun initList() {
+
+        LinearLayoutManager(context).apply {
+            orientation = LinearLayoutManager.VERTICAL
+            list.layoutManager = this
+        }
+
+        adapter = CompleteAdapter().apply {
+            list.adapter = this
+        }
     }
 }

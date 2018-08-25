@@ -21,9 +21,20 @@ import com.arellomobile.mvp.MvpPresenter
 import kz.abt.admin.mvp.model.fragment.CompleteModelImpl
 import kz.abt.admin.mvp.model.fragment.interfaces.CompleteModel
 import kz.abt.admin.mvp.view.fragment.CompleteView
+import kz.abt.admin.ui.util.CompleteJSON
 
 @InjectViewState
-class CompletePresenter : MvpPresenter<CompleteView>() {
-    private val model: CompleteModel = CompleteModelImpl()
+class CompletePresenter : MvpPresenter<CompleteView>(), CompleteModelImpl.OnReadListener {
+    private val model: CompleteModel = CompleteModelImpl(this)
 
+    override fun onComplete(list: MutableList<CompleteJSON>) {
+
+        viewState.setList(list)
+    }
+
+    fun initPresenter(idTournament: Int) {
+
+        model.setTournament(idTournament)
+        model.setReadListener()
+    }
 }

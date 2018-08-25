@@ -6,8 +6,7 @@
     android:layout_marginBottom="8dp"
     android:layout_marginEnd="16dp"
     android:layout_marginStart="16dp"
-    android:layout_marginTop="8dp"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:layout_marginTop="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,14 +53,20 @@
                     android:id="@+id/title_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/winner_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp" />
             </LinearLayout>
 
             <TextView
+                android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/vs"
                 android:textSize="24sp" />
 
             <LinearLayout
@@ -82,8 +87,14 @@
                     android:id="@+id/title_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/winner_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -58,11 +58,11 @@ class GameTeamAdapter : RecyclerView.Adapter<GameTeamAdapter.GameHolder>() {
                 if (pOne == -1) {
                     pOne = p1
 
-                    p0.itemView.item.setBackgroundColor(Color.BLUE)
+                    p0.itemView.item.setBackgroundColor(it.resources.getColor(R.color.colorAccent))
                 } else if (pTwo == -1) {
                     pTwo = p1
 
-                    p0.itemView.item.setBackgroundColor(Color.YELLOW)
+                    p0.itemView.item.setBackgroundColor(it.resources.getColor(R.color.colorPrimary))
                 }
             } else if (p1 == pOne) {
                 pOne = -1
@@ -77,10 +77,10 @@ class GameTeamAdapter : RecyclerView.Adapter<GameTeamAdapter.GameHolder>() {
 
         if (p1 == pOne) {
 
-            p0.itemView.item.setBackgroundColor(Color.BLUE)
+            p0.itemView.item.setBackgroundColor(p0.itemView.resources.getColor(R.color.colorAccent))
         } else if (p1 == pTwo) {
 
-            p0.itemView.item.setBackgroundColor(Color.YELLOW)
+            p0.itemView.item.setBackgroundColor(p0.itemView.resources.getColor(R.color.colorPrimary))
         }
     }
 

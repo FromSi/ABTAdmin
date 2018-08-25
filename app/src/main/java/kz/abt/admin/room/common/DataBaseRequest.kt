@@ -73,6 +73,14 @@ object DataBaseRequest {
                 .subscribe()
     }
 
+    fun updateTeam(team: Team) {
+
+        Completable.fromAction { dataBase!!.teamDao().update(team) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+    }
+
     fun deleteGame(game: Game) {
 
         Completable.fromAction { dataBase!!.gameDao().delete(game) }

@@ -2,76 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp">
+            android:orientation="vertical">
 
             <TextView
-                android:text="@string/tournament_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:text="@string/tournament_one"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:text="@string/tournament_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:text="@string/tournament_two"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp">
+            android:orientation="vertical">
 
             <TextView
-                android:background="?android:attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tournament_three"
                 android:layout_marginBottom="16dp"
-                android:textSize="16sp"/>
+                android:background="?android:attr/selectableItemBackground"
+                android:text="@string/tournament_three"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
             <TextView
-                android:background="?android:attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="?android:attr/selectableItemBackground"
                 android:text="@string/tournament_three"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
             <TextView
-                android:background="?android:attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="?android:attr/selectableItemBackground"
                 android:text="@string/tournament_three"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
             <TextView
-                android:background="?android:attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
                 android:text="@string/tournament_three"
-                android:textSize="16sp"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -79,5 +83,5 @@
         android:id="@+id/number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp" />
 </LinearLayout>

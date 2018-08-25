@@ -16,6 +16,7 @@
 
 package kz.abt.admin.ui.adapters
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -54,7 +55,8 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.GameHolder>() {
 
     override fun onBindViewHolder(p0: GameHolder, p1: Int) {
 
-        p0.init(p1 + 1, list[p1])
+        p0.init(list[p1])
+        p0.initHeader(p1)
         p0.itemView.card.setOnClickListener {
 
             clickListener.onClick(
@@ -67,11 +69,20 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.GameHolder>() {
 
     class GameHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
 
-        fun init(number: Int, gameJSON: GameJSON) {
+        fun init(gameJSON: GameJSON) {
 
-            itemView.number.text = number.toString()
             itemView.title_1.text = gameJSON.teamOne.title
             itemView.title_2.text = gameJSON.teamTwo.title
+        }
+
+        @SuppressLint("SetTextI18n")
+        fun initHeader(p1: Int) {
+            itemView.number.text = "${itemView.resources.getString(R.string.game)} ${p1 + 1}"
+
+            if ((p1 % 2) == 0)
+                itemView.header.setBackgroundColor(itemView.resources.getColor(R.color.colorAccent))
+            else
+                itemView.header.setBackgroundColor(itemView.resources.getColor(R.color.colorPrimary))
         }
     }
 }

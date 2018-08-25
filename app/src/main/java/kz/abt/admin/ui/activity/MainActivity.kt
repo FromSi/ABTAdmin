@@ -16,8 +16,11 @@
 
 package kz.abt.admin.ui.activity
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
+import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,12 +39,15 @@ import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
 
 class MainActivity : MvpAppCompatActivity(), MainView {
+    private var doubleBackToExitPressedOnce = false
+
     @InjectPresenter
     lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_main)
         SwipeBackActivityHelper(this)
                 .apply {
@@ -52,6 +58,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                 }
         fab.setOnClickListener { presenter.clickFab() }
         presenter.initPresenter(intent.getIntExtra("idTournament", 1))
+        text_1.setTextColor(resources.getColor(R.color.colorAccent))
+        icon_1.setColorFilter(resources.getColor(R.color.colorAccent))
     }
 
     override fun openDialogTeam() {
@@ -120,9 +128,32 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                 }
     }
 
+    override fun onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+
+            super.onBackPressed()
+
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
     private fun getFragment(state: MainModelImpl.State, idTournament: Int): Fragment = when (state) {
         MainModelImpl.State.GAME -> {
 
+            text_1.setTextColor(resources.getColor(R.color.colorAccent))
+            icon_1.setColorFilter(resources.getColor(R.color.colorAccent))
+            text_2.setTextColor(Color.BLACK)
+            icon_2.setColorFilter(Color.BLACK)
+            text_3.setTextColor(Color.BLACK)
+            icon_3.setColorFilter(Color.BLACK)
             presenter.setState(MainModelImpl.State.GAME)
             GameFragment().apply {
                 arguments = Bundle().apply {
@@ -132,6 +163,12 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
         MainModelImpl.State.TEAM -> {
 
+            text_1.setTextColor(Color.BLACK)
+            icon_1.setColorFilter(Color.BLACK)
+            text_2.setTextColor(resources.getColor(R.color.colorAccent))
+            icon_2.setColorFilter(resources.getColor(R.color.colorAccent))
+            text_3.setTextColor(Color.BLACK)
+            icon_3.setColorFilter(Color.BLACK)
             presenter.setState(MainModelImpl.State.TEAM)
             TeamFragment().apply {
                 arguments = Bundle().apply {
@@ -141,6 +178,12 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
         MainModelImpl.State.COMPLETE -> {
 
+            text_1.setTextColor(Color.BLACK)
+            icon_1.setColorFilter(Color.BLACK)
+            text_2.setTextColor(Color.BLACK)
+            icon_2.setColorFilter(Color.BLACK)
+            text_3.setTextColor(resources.getColor(R.color.colorAccent))
+            icon_3.setColorFilter(resources.getColor(R.color.colorAccent))
             presenter.setState(MainModelImpl.State.COMPLETE)
             CompleteFragment().apply {
                 arguments = Bundle().apply {

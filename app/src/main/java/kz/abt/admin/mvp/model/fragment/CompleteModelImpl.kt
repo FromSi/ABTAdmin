@@ -16,8 +16,57 @@
 
 package kz.abt.admin.mvp.model.fragment
 
+import io.reactivex.Maybe
+import io.reactivex.functions.BiFunction
 import kz.abt.admin.mvp.model.fragment.interfaces.CompleteModel
+import kz.abt.admin.room.common.DataBaseRequest
+import kz.abt.admin.room.table.Team
+import kz.abt.admin.ui.util.CompleteJSON
 
-class CompleteModelImpl : CompleteModel {
+class CompleteModelImpl(private val readListener: OnReadListener) : CompleteModel {
+    private var idTournament = 1
 
+    interface OnReadListener {
+
+        fun onComplete(list: MutableList<CompleteJSON>)
+    }
+
+    override fun setTournament(idTournament: Int) {
+        this.idTournament = idTournament
+    }
+
+    override fun setReadListener() {
+
+        DataBaseRequest.getCompleteList(idTournament)
+                .map{ it ->
+                    val list: MutableList<CompleteJSON> = mutableListOf()
+                    val zipList: MutableList<Maybe<CompleteJSON>> = mutableListOf()
+
+                    //Собирает list для ассихронного запроса Maybe из Room
+                    for (i in 0 until it.size)
+                        zipList.add(Maybe
+                                .zip(
+                                        DataBaseRequest.getTeam(it[i].idTeam1),
+                                        DataBaseRequest.getTeam(it[i].idTeam2),
+                                        BiFunction<Team, Team, CompleteJSON> { one, two ->
+                                            CompleteJSON(
+                                                    one.title,
+                                                    two.title,
+                                                    it[i].s1,
+                                                    it[i].s2,
+                                                    it[i].idComplete
+                                            )
+                                        }
+                                )
+                        )
+
+                    //Собирает объекты и отправляет готовый list presenter'у
+                    Maybe.concat(zipList)
+                            .subscribe(
+                                    { list.add(it) },
+                                    { },
+                                    { readListener.onComplete(list) }
+                            )
+                }.subscribe()
+    }
 }

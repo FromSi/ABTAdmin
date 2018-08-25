@@ -20,6 +20,7 @@ import android.os.CountDownTimer
 import io.reactivex.Maybe
 import kz.abt.admin.mvp.model.interfaces.GameModel
 import kz.abt.admin.room.common.DataBaseRequest
+import kz.abt.admin.room.table.Complete
 import kz.abt.admin.room.table.Game
 import kz.abt.admin.room.table.Team
 import java.util.concurrent.TimeUnit
@@ -46,13 +47,13 @@ class GameModelImpl(private val readListener: OnReadListener) : GameModel {
     }
 
     override fun setScoreOne(scoreOne: Int): String {
-        this.scoreOne = scoreOne
+        this.scoreOne += scoreOne
 
         return teamOne.title
     }
 
     override fun setScoreTwo(scoreTwo: Int): String {
-        this.scoreTwo = scoreTwo
+        this.scoreTwo += scoreTwo
 
         return teamTwo.title
     }
@@ -64,8 +65,35 @@ class GameModelImpl(private val readListener: OnReadListener) : GameModel {
                         idTournament,
                         teamOne.idTeam,
                         teamTwo.idTeam
-                        ).apply { idGame = this@GameModelImpl.idGame }
+                ).apply { idGame = this@GameModelImpl.idGame }
         )
+        DataBaseRequest.insertComplete(
+                Complete(
+                        idTournament,
+                        teamOne.idTeam,
+                        teamTwo.idTeam,
+                        scoreOne,
+                        scoreTwo
+                )
+        )
+
+        when {
+            scoreOne > scoreTwo -> {
+
+                DataBaseRequest.updateTeam(teamOne.apply { point += 2 })
+                DataBaseRequest.updateTeam(teamTwo.apply { point += 1 })
+            }
+            scoreOne < scoreTwo -> {
+
+                DataBaseRequest.updateTeam(teamOne.apply { point += 1 })
+                DataBaseRequest.updateTeam(teamTwo.apply { point += 2 })
+            }
+            scoreOne == scoreTwo -> {
+
+                DataBaseRequest.updateTeam(teamOne.apply { point += 1 })
+                DataBaseRequest.updateTeam(teamTwo.apply { point += 1 })
+            }
+        }
     }
 
     override fun setId(idTournament: Int, idTeamOne: Int, idTeamTwo: Int, idGame: Int) {

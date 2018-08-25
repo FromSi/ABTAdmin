@@ -17,7 +17,9 @@
 package kz.abt.admin.mvp.view.fragment
 
 import com.arellomobile.mvp.MvpView
+import kz.abt.admin.ui.util.CompleteJSON
 
 interface CompleteView : MvpView {
 
+    fun setList(list: MutableList<CompleteJSON>)
 }

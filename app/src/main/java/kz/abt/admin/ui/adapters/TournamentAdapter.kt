@@ -54,6 +54,7 @@ class TournamentAdapter : RecyclerView.Adapter<TournamentAdapter.TournamentHolde
 
     override fun onBindViewHolder(p0: TournamentHolder, p1: Int) {
 
+        p0.initColorCard(list[p1].number)
         p0.init(list[p1].typeTournament, list[p1].date, list[p1].number)
         p0.itemView.card.setOnClickListener { clickListener.clickListener(list[p1].idTournament) }
     }
@@ -69,6 +70,14 @@ class TournamentAdapter : RecyclerView.Adapter<TournamentAdapter.TournamentHolde
                 itemView.type_tournament.text = itemView.resources.getString(R.string.tournament_one)
             else
                 itemView.type_tournament.text = itemView.resources.getString(R.string.tournament_two)
+        }
+
+        fun initColorCard(p1: Int){
+
+            if ((p1 % 2) == 1)
+                itemView.card.setCardBackgroundColor(itemView.resources.getColor(R.color.colorAccent))
+            else
+                itemView.card.setCardBackgroundColor(itemView.resources.getColor(R.color.colorPrimary))
         }
     }
 }

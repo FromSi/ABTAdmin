@@ -19,6 +19,7 @@ package kz.abt.admin.room.interfaces
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Update
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import kz.abt.admin.room.table.Team
@@ -28,6 +29,9 @@ interface TeamDao {
 
     @Insert
     fun insert(team: Team): Long
+
+    @Update
+    fun update(team: Team)
 
     @Query("SELECT * FROM `team` WHERE `team`.idTournament = :idTournament")
     fun getTeamList(idTournament: Int): Flowable<MutableList<Team>>

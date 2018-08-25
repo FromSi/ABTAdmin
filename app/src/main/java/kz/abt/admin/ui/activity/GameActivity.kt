@@ -17,8 +17,10 @@
 package kz.abt.admin.ui.activity
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
+import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_game.*
@@ -29,12 +31,15 @@ import kz.abt.admin.ui.fragment.dialog.ExitDialog
 import kotlin.math.PI
 
 class GameActivity : MvpAppCompatActivity(), GameView {
+    private var doubleBackToExitPressedOnce = false
+
     @InjectPresenter
     lateinit var presenter: GamePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         setContentView(R.layout.activity_game)
         presenter.setId(
                 intent.getIntExtra("idTournament", 1),
@@ -60,6 +65,7 @@ class GameActivity : MvpAppCompatActivity(), GameView {
     override fun finishActivity() {
 
         finish()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
     override fun playTimer() {
@@ -96,6 +102,23 @@ class GameActivity : MvpAppCompatActivity(), GameView {
 
             show()
         }
+    }
+
+    override fun onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+
+            super.onBackPressed()
+
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
     override fun setPointOne(text: String) {

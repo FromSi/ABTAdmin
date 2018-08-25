@@ -25,5 +25,4 @@
             android:name="kz.abt.admin.ui.activity.GameActivity"
             android:screenOrientation="portrait" />
     </application>
-
 </manifest>
