@@ -1,6 +1,38 @@
-# License
+# ABTAdmin
+Приложение удобно использовать в различных уличных соревнованиях по баскетболу, футболу и т.п. Через приложение можно записывать победителей, сами команды, выводить очки, следить за самой игрой (добавляя очки забитых голов).<br />
+<strong>Для данного приложения имеется свои не реализованные идеи.</strong>
 
- 	 Copyright 2018 Vlad Weber-Pflaumer
+## Sreenshots
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+        <img src="screenshot/img1.jpg" width="227" heght="450"/>
+      </td>
+      <td align="center" valign="middle">
+        <img src="screenshot/img6.jpg" width="302" heght="600"/>
+      </td>
+      <td align="center" valign="middle">
+        <img src="screenshot/img3.jpg" width="227" heght="450"/>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="middle">
+        <img src="screenshot/img4.jpg" width="227" heght="450"/>
+      </td>
+      <td align="center" valign="middle">
+        <img src="screenshot/img5.jpg" width="227" heght="450"/>
+      </td>
+      <td align="center" valign="middle">
+        <img src="screenshot/img2.jpg" width="227" heght="450"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## License
+
+ 	 Copyright 2019 FromSi
 
  	 Licensed under the Apache License, Version 2.0 (the "License");
  	 you may not use this file except in compliance with the License.
